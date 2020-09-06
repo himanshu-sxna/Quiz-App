@@ -1,14 +1,64 @@
-*{
+/* Universal Styling **/
+  *, 
+  *:before, 
+  *:after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+  }
+/* Set backgoriund color for App */
+body {
+    background-color: #F5F1EA;
 }
 
+/*
+The below styles set the basic layout of the page.
+They divide the page in 3 sections indicating each section's height
+*/
 #wrapper {
-    background-image: url(/Quiz-App/images/background.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     height: 100vh;
+}
+
+#head-row,
+#foot-row {
+    height: 10%;
+}
+
+/* Main section with all content */
+#content-row {
+    height: 70%;
+}
+
+/* Size of the quiz Icon Image */
+#quiz-icon {
+    height: 250px;
+    width: auto;
+}
+/* Stylings for the text below the image icon*/
+#heading1 {
+    margin-top: 20px;
+    font-size: 3.5em;
+    margin-bottom: 5px;
+}
+
+#heading2 {
+    margin-bottom: 5px;
+}
+
+#heading2,
+#heading3 {
+    font-size: 2em;
+}
+
+#nameInputDiv{
+    display: none;
+    margin-bottom: 20px;
+}
+
+#nameError {
+    font-size: 0.45em;
+    color: #4d4d4d;
+    margin-top: 5px;
+    display: none;
 }
 
