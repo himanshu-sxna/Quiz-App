@@ -11,28 +11,88 @@
     <title>Quiz-App</title>
 </head>
 <body>
-
     <div class="ui center aligned container" id="wrapper">
         <div class="row" id="head-row"></div>
         <div class="row" id="content-row">
             <div class="column">
                 <img src="/images/quiz-icon.png" alt="quiz-icon.png" id="quiz-icon">
                 <p id="heading1"> Vocabulary Quiz </p>
-                <p id="heading2"> Hi There !</p>
+                <p id="heading2"> Hi There!</p>
                 <p id="heading3">Ready to test your knowledge and learn some new words?</p>
+                
+                <!-- This div is the player name input div -->
                 <div class="ui massive transparent input" id="nameInputDiv">
-                    <input type="text" placeholder="Enter your name here.." required id="nameInput">
-                    <p id="nameError">*Oops! Name is required</p>
-                  </div>
-                <button class="huge ui secondary button" onclick="getUserName()" id="button">
-                    Sure
-                  </button>
+                    <input type="text" placeholder="Enter your name here..." required id="nameInput">
+                    <p id="nameError">*Oops! name is required. Must have 1 letter or number.</p>
+                </div>
+                
+                
+                <!-- This div is the game instruction Div -->
+                <div id="steps-wrapper">
+                    <p> Hi <strong> <span id="playerName"></span> </strong> we're going to test your knowledge of word meanings.</p>
+                    <p>Pick the correct option for each question.</p>
+                    <p>You have 30 seconds to go thorugh all 5 questions.</p>
+                    <p> Every incorrect answer will reduce your time by 5 seconds. </p>
+                    <p> If the timer reaches 0, the game ends </p>
+                    <p> Click the button below when ready! </p>
+                </div>
+                <button class="huge ui secondary button" onclick="getUserName()" id="button">Sure
+                </button>
+
+                <!-- This div is the main Quiz Div -->
+                <div id="quiz-div">
+                    <div class="row">
+                        <p id="quiz-time">30 s</p>
+                    </div>
+                    <div class="row">
+                        <p id="quiz-question"> This is the question </p>
+                    </div>
+                    <div class="row option-btn">
+                        <div class="big ui labeled button" tabindex="0">
+                            <a class="ui basic teal right pointing label">A
+                            </a>
+                            <button class="big ui teal button" id="A">Option</button>
+                        </div>
+                    </div>
+                    <div class="row option-btn">
+                        <div class="big ui labeled button" tabindex="0">
+                            <a class="ui basic teal right pointing label">B
+                            </a>
+                            <button class="big ui teal button" id="B">Option </button>
+                        </div>
+                    </div>
+                    <div class="row option-btn">
+                        <div class="big ui labeled button" tabindex="0">
+                            <a class="ui basic teal right pointing label">C
+                            </a>
+                            <button class="big ui teal button" id="C"> Option</button>
+                        </div>
+                    </div>
+                    <div class="row option-btn">
+                        <div class="big ui labeled button" tabindex="0">
+                            <a class="ui basic teal right pointing label">D
+                            </a>
+                            <button class="big ui teal button" id="D">Option</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="score-table-div">
+                    <table class="ui very basic collapsing celled table" id="score-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Score</th>
+                          </tr>
+                        </thead>
+                        <tbody id="score-table-body">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="row" id="foot-row"></div>
 
-    </div>
-    
     <!-- Scripts Links-->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>

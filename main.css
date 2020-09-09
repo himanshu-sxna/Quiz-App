@@ -33,6 +33,8 @@ They divide the page in 3 sections indicating each section's height
 #quiz-icon {
     height: 250px;
     width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 /* Stylings for the text below the image icon*/
 #heading1 {
@@ -50,6 +52,13 @@ They divide the page in 3 sections indicating each section's height
     font-size: 2em;
 }
 
+#button {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #nameInputDiv{
     display: none;
     margin-bottom: 20px;
@@ -62,3 +71,59 @@ They divide the page in 3 sections indicating each section's height
     display: none;
 }
 
+#steps-wrapper {
+    display: none;
+    margin-top: ;
+    font-size: 1.5em;
+
+}
+
+#playerName {
+    font-size: 2em;
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+
+#quiz-div{
+    margin-top: 20px;
+    display: none;
+}
+
+#quiz-time {
+    font-size: 4em;
+}
+
+#quiz-question {
+    font-size: 3.5em;
+    margin-bottom: 35px;
+    margin-top: 35px;
+}
+
+.option-btn{
+    padding: 5px;
+}
+
+#A,
+#B,
+#C,
+#D   {
+    width: 225px;
+}
+
+#menu-btn1,
+#menu-btn2 {
+    margin-top: 35px;
+    width: 150px;
+}
+
+#score-table-div {
+    display: none;
+}
+
+#score-table{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    font-size: 1.75em;
+}
