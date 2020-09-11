@@ -60,7 +60,7 @@ let quizData = {
     ]
 }
 
-let secondsCounter = 59;
+let secondsCounter = 74;
 let i = 0;
 
 
@@ -118,7 +118,7 @@ function buildQuiz() {
         secondsCounter += 10;
         ansRight();
       }else {
-        secondsCounter -= 10;
+        secondsCounter -= 5;
         ansWrong();
       }
       i++;
