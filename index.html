@@ -11,10 +11,12 @@
     <title>Quiz-App</title>
 </head>
 <body>
+    <!-- main container start-->
     <div class="ui center aligned container" id="wrapper">
         <div class="row" id="head-row"></div>
         <div class="row" id="content-row">
             <div class="column">
+                <!-- The homepage content -->
                 <img src="/images/quiz-icon.png" alt="quiz-icon.png" id="quiz-icon">
                 <p id="heading1"> Vocabulary Quiz </p>
                 <p id="heading2"> Hi There!</p>
@@ -28,21 +30,37 @@
                 
                 
                 <!-- This div is the game instruction Div -->
-                <div id="steps-wrapper">
-                    <p> Hi <strong> <span id="playerName"></span> </strong> we're going to test your knowledge of word meanings.</p>
+                <div class="ui centre aligned container" id="steps-wrapper">
+                    <p> Hi <strong> <span id="playerName"></span> </strong> we're going to test your knowledge of words.</p>
+                    <p>You have 60 seconds to answer all 5 questions.</p>
                     <p>Pick the correct option for each question.</p>
-                    <p>You have 30 seconds to go thorugh all 5 questions.</p>
                     <p> Every incorrect answer will reduce your time by 5 seconds. </p>
-                    <p> If the timer reaches 0, the game ends </p>
-                    <p> Click the button below when ready! </p>
+                    <p> Every correct answer will add 10 seconds to your time</p>
+                    <p> If the timer reaches 0, the game ends.</p>
+                    <p>Your score will be the time remaining when you answer all the questions.</p>
+                </div>
+                <!-- Displays the scores stored in local Storage -->
+                <div class="row" id="score-table-div">
+                    <table class="ui very basic collapsing celled table" id="score-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Score</th>
+                          </tr>
+                        </thead>
+                        <tbody id="score-table-body">
+                        </tbody>
+                    </table>
                 </div>
                 <button class="huge ui secondary button" onclick="getUserName()" id="button">Sure
+                </button>
+                <button class="huge ui secondary button" id="restart-btn" onclick="loadQuiz()"> Play Again
                 </button>
 
                 <!-- This div is the main Quiz Div -->
                 <div id="quiz-div">
                     <div class="row">
-                        <p id="quiz-time">30 s</p>
+                        <p id="quiz-time">60 s</p>
                     </div>
                     <div class="row">
                         <p id="quiz-question"> This is the question </p>
@@ -75,19 +93,9 @@
                             <button class="big ui teal button" id="D">Option</button>
                         </div>
                     </div>
-                </div>
-
-                <div class="row" id="score-table-div">
-                    <table class="ui very basic collapsing celled table" id="score-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Score</th>
-                          </tr>
-                        </thead>
-                        <tbody id="score-table-body">
-                        </tbody>
-                    </table>
+                    <div class="row" id="ans-check-div">
+                        <p id="ans-check"></p>
+                    </div>
                 </div>
             </div>
         </div>

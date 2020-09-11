@@ -4,49 +4,66 @@ let quizData = {
 
     gameScore: 0,
     playerName: "",
-    isGameOver: false,
     quizScores: {
     },
     quizQuestions: [
       {
-        question: "1. Who invented JavaScript?",
+        question: "1. Which is a synonym of deleterious?",
         answers: {
-          a: "Douglas Crockford",
-          b: "Sheryl Sandberg",
-          c: "Brendan Eich",
-          d:  "Bill Gates"
+          a: "Harmful",
+          b: "Pure",
+          c: "Necessary",
+          d: "Hollow"
         },
-        correctAnswer: "C"
+        correctAnswer: "A"
       },
       {
-        question: "2. Which one of these is a JavaScript package manager?",
+        question: "2. A small, rounded hill",
         answers: {
-          a: "Node.js",
-          b: "TypeScript",
-          c: "npm",
-          d: "PyCharm"
+          a: "Pioneer",
+          b: "Knoll",
+          c: "Stoic",
+          d: "Plateau"
         },
-        correctAnswer: "C"
+        correctAnswer: "B"
       },
       {
-        question: "3. Which tool can you use to ensure code quality?",
+        question: "3. Dried out with heat, extremely thirsty",
         answers: {
-          a: "Angular",
-          b: "jQuery",
-          c: "RequireJS",
-          d: "ESLint"
+          a: "Nepotism",
+          b: "Descend",
+          c: "Occurrence",
+          d: "Parched"
         },
         correctAnswer: "D"
+      },
+      {
+        question: "4. Which is a synonym of reminisce?",
+        answers: {
+          a: "Remember",
+          b: "Solve",
+          c: "Injure",
+          d: "Practice",
+        },
+        correctAnswer: "A"
+      },
+      {
+        question: "5. Which is a synonym of perennial?",
+        answers: {
+          a: "Lasting",
+          b: "Loyal",
+          c: "Affordable",
+          d: "Sentimental",
+        },
+        correctAnswer: "A"
       },
     ]
 }
 
-let secondsCounter = 29;
+let secondsCounter = 59;
 let i = 0;
 
-if (secondsCounter === 0) {
-  gameOver();
-}
+
 
 function buildQuiz() {
 
@@ -64,15 +81,28 @@ function buildQuiz() {
 
   switchQuestion(i);
 
-  timer();
+  
+  let startTimer = setInterval( function secondsTimer() {
+    
+    if (secondsCounter == 0){
+      timeOut();
+      clearInterval(startTimer);
+    } else if (secondsCounter < 10){
+      getTimer.innerHTML = "0" + secondsCounter + " s";
+    } else {
+      getTimer.innerHTML = secondsCounter + " s";
+    }
+    secondsCounter --;
+  }, 1000);
 
   function switchQuestion(i) {
+  
     getQuestionBox.innerHTML = quizData.quizQuestions[i].question;
     getansOptA.innerHTML = quizData.quizQuestions[i].answers.a;
     getansOptB.innerHTML = quizData.quizQuestions[i].answers.b;
     getansOptC.innerHTML = quizData.quizQuestions[i].answers.c;
     getansOptD.innerHTML = quizData.quizQuestions[i].answers.d; 
-
+     
     getansOptA.onclick = answerChoice;
     getansOptB.onclick = answerChoice;
     getansOptC.onclick = answerChoice;
@@ -81,47 +111,97 @@ function buildQuiz() {
     console.log("The correct answer is " + quizData.quizQuestions[i].correctAnswer);
 
   }
-    function answerChoice(clicked) {
+    function answerChoice() {
 
-      if (i === 2){
-        endScreen();
-      } else {
-        let userOption = this.id;
-      console.log("The user option is " + userOption);
+      let userOption = this.id;
       if(userOption === quizData.quizQuestions[i].correctAnswer){
         secondsCounter += 10;
+        ansRight();
       }else {
         secondsCounter -= 10;
+        ansWrong();
       }
-      console.log("i = " + i);
-        i++;
+      i++;
+      try {
         switchQuestion(i);
+      } catch {
+        setTimeout (endScreen, 500);
+        clearInterval(startTimer);
       }
-    }
-    
+        quizData.gameScore = secondsCounter;
+      }
 }
+
+function ansRight() {
+
+  getAnsCheck = document.getElementById("ans-check");
+
+  getAnsCheck.innerHTML = "Correct!";
+  getAnsCheck.style.color = "#4cee18";
+  getAnsCheck.style.display = "block";
+
+  function hideMe(){
+    getAnsCheck.style.display = "none" ;
+}
+
+  setTimeout( hideMe, 250 );
+}
+
+function ansWrong() {
+
+  getAnsCheck = document.getElementById("ans-check");
+
+  getAnsCheck.innerHTML = "Incorrect";
+  getAnsCheck.style.color = "#dd1e04";
+  getAnsCheck.style.display = "block";
+
+  function hideMe(){
+    getAnsCheck.style.display = "none" ;
+}
+
+  setTimeout( hideMe, 250 );
+}
+
 
 function endScreen() {
 
-  quizData.gameScore = secondsCounter;
-
+  var getRestartBtn = document.getElementById("restart-btn");
   getQuizDiv.style.display = "none";
 
+  getRestartBtn.style.display = "block";
   getImg.style.display = "block";
   getImg.style.height = "250px";
   getLine1.style.display = "block";
   getButton.style.display = "block";
   getButton.setAttribute("onclick", "saveScores()")
 
-  getLine1.innerHTML = ("Great! Your score is " + quizData.gameScore);
+  getLine1.innerHTML = ("All done. Your score is " + quizData.gameScore);
   getButton.innerHTML = "Save my score";
 
 }
 
+function timeOut(){
+
+  getQuizDiv.style.display = "none";
+  getLine1.style.display = "block";
+  getButton.style.display = "block";
+  getImg.style.display = "block";
+  getImg.style.height = "250px";
+
+  getLine1.innerHTML = "Oops! Looks like you ran out of time";
+  getButton.innerHTML = "Try Again";
+
+  getButton.onclick = loadQuiz;
+
+}
+
+function loadQuiz() {
+  location.reload();
+}
+
 function saveScores() {
   quizData.quizScores[quizData.playerName] = quizData.gameScore;
-  console.log(quizData.quizScores);
-  localStorage.setItem(quizData.playerName, quizData.gameScore);
+  localStorage.setItem(quizData.gameScore, quizData.playerName);
 
   showScores();
 }
@@ -138,33 +218,23 @@ function showScores() {
 
   getScoreDiv.style.display ="block";
 
-  for (x = 1; x < localStorage.length; x++){
-    getScoreTable.innerHTML += "<tr><td>" + localStorage.key(x) + "</td><td>" + localStorage.getItem(localStorage.key(x)) + "</td> </tr>"
+  for (x = 0; x < localStorage.length; x++){
+
+    if (localStorage.key(x).length <= 2) {
+      getScoreTable.innerHTML += "<tr><td>" + localStorage.getItem(localStorage.key(x)) + "</td><td>" + localStorage.key(x) + "</td> </tr>";
+    }
+    
   }
 }
 
 function clearStorage () {
 
-  if (confirm("Clear all Scores")){
+  if (confirm("All scores have been cleared")){
     localStorage.clear();
   }
   location.reload();
 }
 
-function timer() {
-
-  let getTimer = document.getElementById("quiz-time");
-
-  setInterval( function secondsTimer() {
-    
-    if (secondsCounter < 10){
-      getTimer.innerHTML = "0" + secondsCounter + " s";
-    } else {
-      getTimer.innerHTML = secondsCounter + " s";
-    }
-    secondsCounter --;
-  }, 1000);
-}
 
 // targeting all required HTML tags //
 const getLine1 = document.getElementById("heading1");
@@ -177,6 +247,7 @@ const getError = document.getElementById("nameError");
 let nameValue = document.getElementById("nameInput");
 const getStepsDiv = document.getElementById("steps-wrapper");
 const getQuizDiv = document.getElementById("quiz-div");
+let getTimer = document.getElementById("quiz-time");
 
 
 /* The below function prompts the user to store the player name after the home screen*/
@@ -224,17 +295,3 @@ function validateName() {
 
     getButton.setAttribute("onclick", "buildQuiz()");
   }
-
-/*
-function displayItem(elementID) {
-    var item = document.getElementById(elementID).id;
-    console.log("item is " + item);
-    if (item.style.display === "none") {
-      item.style.display = "block";
-    } else {
-      item.style.display = "none";
-    }
-  }
-  */
-  console.log(localStorage.length);
-

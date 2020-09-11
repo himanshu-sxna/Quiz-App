@@ -59,6 +59,12 @@ They divide the page in 3 sections indicating each section's height
     margin-right: auto;
 }
 
+#restart-btn {
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #nameInputDiv{
     display: none;
     margin-bottom: 20px;
@@ -126,4 +132,11 @@ They divide the page in 3 sections indicating each section's height
     margin-right: auto;
     margin-top: 100px;
     font-size: 1.75em;
+}
+
+#ans-check {
+
+    padding-top: 10px;
+    font-size: 2.5em;
+    font-weight: 400;
 }
