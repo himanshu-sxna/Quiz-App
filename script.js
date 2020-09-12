@@ -99,6 +99,9 @@ function validateName() {
     getError.style.display = "none";
     displaySteps();
   }
+  else {
+    getError.style.display = "block";
+  }
 }
 
 /* The function displays the set of instructions alongwith the playername, it also sets th ebutton's onclick attribute to the buildQuiz() to start the quiz when user is ready */
