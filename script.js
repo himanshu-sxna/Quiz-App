@@ -60,31 +60,97 @@ let quizData = {
     ]
 }
 
-let secondsCounter = 74;
-let i = 0;
+/* targeting all required HTML tags 
+/ these tags have global scope because they will be used in /
+/ the functions below multiple times */
+let getLine1 = document.getElementById("heading1");
+let getLine2 = document.getElementById("heading2");
+let getLine3 = document.getElementById("heading3");
+let getnameInputDiv = document.getElementById("nameInputDiv");
+let getButton = document.getElementById("button");
+let getImg = document.getElementById("quiz-icon");
+let getError = document.getElementById("nameError");
+let nameValue = document.getElementById("nameInput");
+let getStepsDiv = document.getElementById("steps-wrapper");
+let getQuizDiv = document.getElementById("quiz-div");
+let getTimer = document.getElementById("quiz-time");
 
+/* The below function prompts the user to store the player name after the home screen*/
+function getUserName() {
 
+  getLine1.innerHTML = "Great!";
+  getLine2.innerHTML = "Lets start with your name";
+  getLine3.style.display = "none";
+  getnameInputDiv.style.display = "block";
+  getButton.innerHTML = "OK";
+  getButton.setAttribute("onclick", "validateName()");
+}
 
+/* Function to validate user name, all inputs are accepted except a blank input field, Regex still need work, as user can enter witespace only as name*/
+function validateName() {
+
+  let getNameValue = nameValue.value;
+  // checks lenghth is not zero//
+  if (getNameValue.length === 0) {
+    getError.style.display = "block";
+  } // Regex to check must have letter or numbers //
+   else if (getNameValue.length > 0 && /[A-Za-z0-9]+/g.test(getNameValue)) {
+    quizData.playerName = getNameValue;
+    getError.style.display = "none";
+    displaySteps();
+  }
+}
+
+/* The function displays the set of instructions alongwith the playername, it also sets th ebutton's onclick attribute to the buildQuiz() to start the quiz when user is ready */
+function displaySteps() {
+    
+  let getNameSpan = document.getElementById("playerName");
+
+  getLine1.style.display = "none";
+  getLine2.style.display = "none";
+  getLine3.style.display = "none";
+  getImg.style.height= "125px";
+  nameValue.style.display = "none";
+
+  getStepsDiv.style.display = "block";
+  getNameSpan.innerHTML = quizData.playerName;
+  getButton.innerHTML = "Let's Go";
+
+  getButton.setAttribute("onclick", "buildQuiz()");
+}
+
+/* The main function that does the following: /
+/ Sets the HTML for displaying the question and options/
+/ Sets the seconds counter for the timer /
+/ var i to iterate through the question and answer array /
+/Switches the questions afetr user inputs /
+/ compares the user input to the correct answer/*/
 function buildQuiz() {
 
+  let secondsCounter = 74;
+  // variable to iterate the questions array //
+  let i = 0;
+
+  // setting up the HTML for the page //
   getStepsDiv.style.display = "none";
   getImg.style.display = "none";
   getButton.style.display = "none";
 
   getQuizDiv.style.display = "block";
 
-  const getQuestionBox = document.getElementById("quiz-question");
-  const getansOptA = document.getElementById("A");
-  const getansOptB = document.getElementById("B");
-  const getansOptC = document.getElementById("C");
-  const getansOptD = document.getElementById("D");
+  let getQuestionBox = document.getElementById("quiz-question");
+  let getansOptA = document.getElementById("A");
+  let getansOptB = document.getElementById("B");
+  let getansOptC = document.getElementById("C");
+  let getansOptD = document.getElementById("D");
 
+  // functon to iterate through the question array //
+  // It also sets the timer to 75s//
   switchQuestion(i);
-
   
   let startTimer = setInterval( function secondsTimer() {
     
-    if (secondsCounter == 0){
+    if (secondsCounter <= 0){
       timeOut();
       clearInterval(startTimer);
     } else if (secondsCounter < 10){
@@ -107,31 +173,38 @@ function buildQuiz() {
     getansOptB.onclick = answerChoice;
     getansOptC.onclick = answerChoice;
     getansOptD.onclick = answerChoice;
-
-    console.log("The correct answer is " + quizData.quizQuestions[i].correctAnswer);
-
   }
+  // function that compares the user inoput to asses correct answer//
     function answerChoice() {
 
       let userOption = this.id;
+      // if answer is correct add 10 seconds//
+      // call ansRight() //
       if(userOption === quizData.quizQuestions[i].correctAnswer){
         secondsCounter += 10;
         ansRight();
-      }else {
+      } // if answer is incorrect //
+      // deduct 5 seconds, call ansWrong()//
+      else {
         secondsCounter -= 5;
         ansWrong();
       }
       i++;
+      /* try catch loop to catch the instance for when var i iterates more than the length of the array  */
       try {
         switchQuestion(i);
       } catch {
         setTimeout (endScreen, 500);
         clearInterval(startTimer);
       }
-        quizData.gameScore = secondsCounter;
+      
+      quizData.gameScore = secondsCounter;
+    
+      
       }
 }
 
+/*Flashes correct when the the users answer is correct*/
 function ansRight() {
 
   getAnsCheck = document.getElementById("ans-check");
@@ -143,10 +216,10 @@ function ansRight() {
   function hideMe(){
     getAnsCheck.style.display = "none" ;
 }
-
   setTimeout( hideMe, 250 );
 }
 
+/*Flashes incorrect when the the users answer is wrong*/
 function ansWrong() {
 
   getAnsCheck = document.getElementById("ans-check");
@@ -161,8 +234,8 @@ function ansWrong() {
 
   setTimeout( hideMe, 250 );
 }
-
-
+/*Function displays the score screen with the option /
+/ to write score data to local storage */
 function endScreen() {
 
   var getRestartBtn = document.getElementById("restart-btn");
@@ -175,11 +248,62 @@ function endScreen() {
   getButton.style.display = "block";
   getButton.setAttribute("onclick", "saveScores()")
 
-  getLine1.innerHTML = ("All done. Your score is " + quizData.gameScore);
+  // set the usersoce to 0 if timer goes to zero//
+  if (quizData.gameScore <=0){
+    getLine1.innerHTML = ("All done. Your score is 0");
+  }else {
+    getLine1.innerHTML = ("All done. Your score is " + quizData.gameScore);
+  }
+  // the below button will save scores//
   getButton.innerHTML = "Save my score";
-
 }
 
+/* The below function saves the user score in local storage /
+/ and populates the html table to display all saved scores*/
+function saveScores() {
+  // save scores to storage//
+  quizData.quizScores[quizData.playerName] = quizData.gameScore;
+  localStorage.setItem(quizData.gameScore, quizData.playerName);
+
+  // set up html for the table//
+  const getScoreDiv = document.getElementById("score-table-div");
+  const getScoreTable = document.getElementById("score-table-body");
+
+  getImg.style.display = "none";
+  getLine1.style.display = "none";
+  getButton.innerHTML = "Clear Scores";
+  // button with clear local storage option//
+  getButton.setAttribute("onclick", "clearStorage()")
+
+  getScoreDiv.style.display ="block";
+
+  /* display the scores if the length of the score is 3 or less/
+  / this prevents other items in local storage to be displayed*/
+  for (x = 0; x < localStorage.length; x++){
+
+    if (localStorage.key(x).length <= 3) {
+      getScoreTable.innerHTML += "<tr><td>" + localStorage.getItem(localStorage.key(x)) + "</td><td>" + localStorage.key(x) + "</td> </tr>";
+    }
+    
+  }
+}
+
+// local storage cleared and quiz reloads//
+function clearStorage () {
+
+  if (confirm("All scores have been cleared")){
+    localStorage.clear();
+  }
+  location.reload();
+}
+
+// this function can loads the quiz//
+function loadQuiz() {
+  location.reload();
+}
+
+/* the fucntion displays the timeput screen /
+/ when the user runs out of time*/
 function timeOut(){
 
   getQuizDiv.style.display = "none";
@@ -192,106 +316,4 @@ function timeOut(){
   getButton.innerHTML = "Try Again";
 
   getButton.onclick = loadQuiz;
-
 }
-
-function loadQuiz() {
-  location.reload();
-}
-
-function saveScores() {
-  quizData.quizScores[quizData.playerName] = quizData.gameScore;
-  localStorage.setItem(quizData.gameScore, quizData.playerName);
-
-  showScores();
-}
-
-function showScores() {
-
-  const getScoreDiv = document.getElementById("score-table-div");
-  const getScoreTable = document.getElementById("score-table-body");
-
-  getImg.style.display = "none";
-  getLine1.style.display = "none";
-  getButton.innerHTML = "Clear Scores";
-  getButton.setAttribute("onclick", "clearStorage()")
-
-  getScoreDiv.style.display ="block";
-
-  for (x = 0; x < localStorage.length; x++){
-
-    if (localStorage.key(x).length <= 2) {
-      getScoreTable.innerHTML += "<tr><td>" + localStorage.getItem(localStorage.key(x)) + "</td><td>" + localStorage.key(x) + "</td> </tr>";
-    }
-    
-  }
-}
-
-function clearStorage () {
-
-  if (confirm("All scores have been cleared")){
-    localStorage.clear();
-  }
-  location.reload();
-}
-
-
-// targeting all required HTML tags //
-const getLine1 = document.getElementById("heading1");
-const getLine2 = document.getElementById("heading2");
-const getLine3 = document.getElementById("heading3");
-const getnameInputDiv = document.getElementById("nameInputDiv");
-const getButton = document.getElementById("button");
-const getImg = document.getElementById("quiz-icon");
-const getError = document.getElementById("nameError");
-let nameValue = document.getElementById("nameInput");
-const getStepsDiv = document.getElementById("steps-wrapper");
-const getQuizDiv = document.getElementById("quiz-div");
-let getTimer = document.getElementById("quiz-time");
-
-
-/* The below function prompts the user to store the player name after the home screen*/
-function getUserName() {
-
-    getLine1.innerHTML = "Great!";
-    getLine2.innerHTML = "Lets start with your name";
-    getLine3.style.display = "none";
-    getnameInputDiv.style.display = "block";
-    getButton.innerHTML = "OK";
-    getButton.setAttribute("onclick", "validateName()");
-  
-}
-
-/* Function to validate user name, all inputs are accepted except a blank input field*/
-function validateName() {
-    let getNameValue = nameValue.value;
-
-    if (getNameValue.length === 0) {
-      getError.style.display = "block";
-    } /* else if (nameValue.match((/^(?=.*[a-zA-Z0-9])/))) {
-      getError.style.display = "block";
-    
-    } */else {
-      quizData.playerName = getNameValue;
-      getError.style.display = "none";
-      displaySteps();
-    }
-  }
-
-/* The function displays the set of instructions alongwith the playername, it also sets th ebutton's onclick attribute to */
-  function displaySteps() {
-    
-    let getNameSpan = document.getElementById("playerName");
-
-    getLine1.style.display = "none";
-    getLine2.style.display = "none";
-    getLine3.style.display = "none";
-    getImg.style.height= "125px";
-    nameValue.style.display = "none";
-
-    getStepsDiv.style.display = "block";
-    getNameSpan.innerHTML = quizData.playerName;
-    getButton.innerHTML = "Let's Go";
-
-    getButton.setAttribute("onclick", "buildQuiz()");
-  }

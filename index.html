@@ -24,24 +24,24 @@
                 
                 <!-- This div is the player name input div -->
                 <div class="ui massive transparent input" id="nameInputDiv">
-                    <input type="text" placeholder="Enter your name here..." required id="nameInput">
+                    <input type="text" placeholder="Enter your name here..." required id="nameInput" pattern="[a-z][a-z0-9]*">
                     <p id="nameError">*Oops! name is required. Must have 1 letter or number.</p>
                 </div>
                 
                 
                 <!-- This div is the game instruction Div -->
                 <div class="ui centre aligned container" id="steps-wrapper">
-                    <p> Hi <strong> <span id="playerName"></span> </strong> we're going to test your knowledge of words.</p>
-                    <p>You have 60 seconds to answer all 5 questions.</p>
-                    <p>Pick the correct option for each question.</p>
-                    <p> Every incorrect answer will reduce your time by 5 seconds. </p>
+                    <p> Hi <strong> <span id="playerName"></span> </strong></p>
+                    <p>You have 60 seconds to answer 5 questions.</p>
+                    <p>Click the correct option for the 4 choices.</p>
                     <p> Every correct answer will add 10 seconds to your time</p>
+                    <p> Every incorrect answer will deduct 5 seconds from your time. </p>
                     <p> If the timer reaches 0, the game ends.</p>
-                    <p>Your score will be the time remaining when you answer all the questions.</p>
+                    <p>Your score will be the time remaining when you have answered all 5 questions.</p>
                 </div>
                 <!-- Displays the scores stored in local Storage -->
                 <div class="row" id="score-table-div">
-                    <table class="ui very basic collapsing celled table" id="score-table">
+                    <table class="ui very basic collapsing celled table unstackable" id="score-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
