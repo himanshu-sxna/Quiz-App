@@ -53,6 +53,7 @@ They divide the page in 3 sections indicating each section's height
     font-size: 2em;
 }
 
+/*Main button */
 #button {
     margin-top: 25px;
     margin-bottom: 25px;
@@ -60,17 +61,20 @@ They divide the page in 3 sections indicating each section's height
     margin-right: auto;
 }
 
+/* Restart button that is diaplsyed end of game */
 #restart-btn {
     display: none;
     margin-left: auto;
     margin-right: auto;
 }
 
+/* input for the user name */
 #nameInputDiv{
     display: none;
     margin-bottom: 20px;
 }
 
+/* error that is displayed is input validation is unsuccessful */
 #nameError {
     font-size: 0.45em;
     color: #4d4d4d;
@@ -78,6 +82,7 @@ They divide the page in 3 sections indicating each section's height
     display: none;
 }
 
+/* div containing all th einstructions */
 #steps-wrapper {
     display: none;
     margin-top: ;
@@ -85,6 +90,8 @@ They divide the page in 3 sections indicating each section's height
 
 }
 
+/* styling for the span that displays the player name /
+/ on the instructions page */
 #playerName {
     font-size: 2em;
     margin-left: 10px;
@@ -92,21 +99,25 @@ They divide the page in 3 sections indicating each section's height
     
 }
 
+/* the main container when the quiz is running */
 #quiz-div{
     margin-top: 20px;
     display: none;
 }
 
+/* timer */
 #quiz-time {
     font-size: 4em;
 }
 
+/* styling for the quiz questions */
 #quiz-question {
     font-size: 3.5em;
     margin-bottom: 35px;
     margin-top: 35px;
 }
 
+/* stylings for the answer buttons*/
 .option-btn{
     padding: 5px;
 }
@@ -118,12 +129,13 @@ They divide the page in 3 sections indicating each section's height
     width: 225px;
 }
 
+/* "Save score" 7 "Play Again" buttons */ 
 #menu-btn1,
 #menu-btn2 {
     margin-top: 35px;
     width: 150px;
 }
-
+/* score table styles */
 #score-table-div {
     display: none;
 }
@@ -135,6 +147,8 @@ They divide the page in 3 sections indicating each section's height
     font-size: 1.75em;
 }
 
+/*styling for the red "correct & /
+/ green "incorrect"*/
 #ans-check {
 
     padding-top: 10px;

@@ -101,6 +101,8 @@ function validateName() {
   }
   else {
     getError.style.display = "block";
+    getNameValue.placeholder = "Enter your name here...";
+
   }
 }
 
